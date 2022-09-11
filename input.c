@@ -3,6 +3,7 @@
 
 #include <SDL.h>
 #include <stdio.h>
+#include <sys/time.h>
 
 #include "config.h"
 #include "input.h"
@@ -236,9 +237,18 @@ static input_msg_s handle_keyjazz(SDL_Event *event, uint8_t keyvalue) {
   return key;
 }
 
+static long long timeInMilliseconds(void) {
+    struct timeval tv;
+
+    gettimeofday(&tv,NULL);
+    return (((long long)tv.tv_sec)*1000)+(tv.tv_usec/1000);
+}
+
 static input_msg_s handle_normal_keys(SDL_Event *event, config_params_s *conf,
                                       uint8_t keyvalue) {
   input_msg_s key = {normal, keyvalue};
+
+  // printf("event: %d %d %d %lld\n", event->key.keysym.scancode, event->key.repeat, event->type, timeInMilliseconds());
 
   if (event->key.keysym.scancode == conf->key_up) {
     key.value = key_up;
