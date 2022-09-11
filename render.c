@@ -15,7 +15,7 @@
 SDL_Window *win;
 SDL_Renderer *rend;
 SDL_Texture *maintexture;
-SDL_Color background_color = (SDL_Color){0, 0, 0, 0};
+SDL_Color background_color = {.r=0, .g=0, .b=0, .a=0};
 
 static uint32_t ticks_fps;
 static int fps;

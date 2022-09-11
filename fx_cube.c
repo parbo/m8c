@@ -1,6 +1,8 @@
 #include <SDL.h>
 #include "SDL2_inprint.h"
 
+#define M_PI 3.141592654
+
 #define target_width 320
 #define target_height 240
 static SDL_Texture *texture_cube;
