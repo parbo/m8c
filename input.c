@@ -387,6 +387,10 @@ void handle_sdl_events(config_params_s *conf) {
 
   SDL_PollEvent(&event);
 
+  if ((event.type == SDL_KEYDOWN || event.type == SDL_KEYUP) && event.key.repeat) {
+    return;
+  }
+
   switch (event.type) {
 
   // Reinitialize game controllers on controller add/remove/remap
