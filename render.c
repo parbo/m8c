@@ -27,8 +27,8 @@ static uint8_t dirty = 0;
 int initialize_sdl(int init_fullscreen, int init_use_gpu) {
   //ticks = SDL_GetTicks();
 
-  const int window_width = 640;  // SDL window width
-  const int window_height = 480; // SDL window height
+  const int window_width = 480;  // SDL window width
+  const int window_height = 272; // SDL window height
 
   if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
     SDL_LogCritical(SDL_LOG_CATEGORY_ERROR, "SDL_Init: %s\n", SDL_GetError());
@@ -45,7 +45,7 @@ int initialize_sdl(int init_fullscreen, int init_use_gpu) {
   rend = SDL_CreateRenderer(
       win, -1, init_use_gpu ? SDL_RENDERER_ACCELERATED : SDL_RENDERER_SOFTWARE);
 
-  SDL_RenderSetLogicalSize(rend, 320, 240);
+  SDL_RenderSetLogicalSize(rend, 480, 272);
 
   maintexture = SDL_CreateTexture(rend, SDL_PIXELFORMAT_ARGB8888,
                                   SDL_TEXTUREACCESS_TARGET, 320, 240);
@@ -224,7 +224,17 @@ void render_screen() {
     SDL_SetRenderTarget(rend, NULL);
     SDL_SetRenderDrawColor(rend, 0, 0, 0, 0);
     SDL_RenderClear(rend);
-    SDL_RenderCopy(rend, maintexture, NULL, NULL);
+    SDL_Rect dest;
+    dest.x = 80;
+    dest.y = 16;
+    dest.w = 320;
+    dest.h = 240;
+    SDL_Rect src;
+    src.x = 0;
+    src.y = 0;
+    src.w = 320;
+    src.h = 240;
+    SDL_RenderCopy(rend, maintexture, &src, &dest);
     SDL_RenderPresent(rend);
     SDL_SetRenderTarget(rend, maintexture);
 
